@@ -1,0 +1,12 @@
+@import "../../packages/zf5/scss/normalize.scss";
+// settings override here (zf5/scss/foundation/_settings.scss file [copy lines here])
+// you can also copy all _settings.scss file into your stylesheet folder and import it here by "@import settings;" - remember to replace foundation/functions path in _settings.scss
+
+@import "../../packages/zf5/scss/foundation.scss";
+// or you can import ony couple components like that
+// @import "../../packages/zf5/scss/foundation/components/grid";
+// @import "../../packages/zf5/scss/foundation/components/accordion";
+// @import "../../packages/zf5/scss/foundation/components/alert-boxes";
+// and so one
+
+// your main styles here:

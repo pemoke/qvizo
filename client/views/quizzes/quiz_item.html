@@ -1,0 +1,18 @@
+<template name="quizItem">
+    <div class="row">
+        <div class="small-12 columns">
+            <h3>{{question}}</h3>
+            <ul>
+                {{#each choices}}
+                <li>{{answer}}</li>
+                {{/each}}
+            </ul>
+        </div>
+    </div>
+    <div class="pagination-centered">
+        <ul class="pagination">
+            <li class="arrow unavailable"><a href="">&laquo;</a></li>
+            <li class="arrow"><a href="">&raquo;</a></li>
+        </ul>
+    </div>
+</template>
