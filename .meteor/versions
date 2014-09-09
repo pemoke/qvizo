@@ -1,5 +1,5 @@
 application-configuration@1.0.0
-autoupdate@1.0.4
+autoupdate@1.0.5
 binary-heap@1.0.0
 blaze-tools@1.0.0
 blaze@1.0.3
@@ -21,12 +21,14 @@ iron:layout@0.3.0
 iron:router@0.9.1
 jquery@1.0.0
 json@1.0.0
+less@1.0.6
 livedata@1.0.7
 logging@1.0.2
 meteor@1.0.2
 minifiers@1.0.2
 minimongo@1.0.1
 mongo-livedata@1.0.3
+nooitaf:semantic-ui-less@0.19.1
 observe-sequence@1.0.1
 ordered-dict@1.0.0
 random@1.0.0

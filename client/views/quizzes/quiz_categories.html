@@ -1,0 +1,7 @@
+<template name="quizCategories">
+    <ul>
+        {{#each categoryName}}
+            <li><a href="{{pathFor 'quizCategories'}}">{{_id}}</a></li>
+        {{/each}}
+    </ul>
+</template>

@@ -1,3 +1,5 @@
 Session.setDefault('questionCursor', 0);
 
-Meteor.subscribe('quizzes', Session.get('questionCursor'));
+Meteor.autorun(function() {
+    Meteor.subscribe('quizzes', Session.get('questionCursor'));
+});
