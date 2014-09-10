@@ -1,10 +1,19 @@
 Template.quizCategories.helpers({
     categoryName: function () {
-        console.log(this._id);
-        var id;
-        this._id === undefined ? id = null : id = this._id;
-        console.log(this._id);
-        var cursor = Quizzes.find({parent: id});
-        return cursor;
+        return this;
+    },
+    filterPath: function() {
+
+        //get the path from the mongo document
+        var filterPath = this.path === null ? this._id : this.path;
+
+        //replace all commas with forward slashes
+        var regExPattern = /(\,)/g;
+        filterPath = filterPath.toString().replace(regExPattern, '/');
+
+        //remove a trailng slash
+        filterPath = filterPath.replace(/\/$/, '');
+
+        return filterPath;
     }
 });

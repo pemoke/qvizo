@@ -1,7 +1,8 @@
 <template name="quizCategories">
+    <h1>Categories:</h1>
     <ul>
         {{#each categoryName}}
-            <li><a href="{{pathFor 'quizCategories'}}">{{_id}}</a></li>
+            <li><a href="{{filterPath}}">{{_id}}</a></li>
         {{/each}}
     </ul>
 </template>
