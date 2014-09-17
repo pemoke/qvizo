@@ -1,5 +1,6 @@
-Session.setDefault('questionCursor', 0);
+//Session.setDefault('questionCursor', 0);
 
 Meteor.autorun(function() {
-    Meteor.subscribe('quizzes', Session.get('questionCursor'));
+    //Meteor.subscribe('categories');
+    //Meteor.subscribe('quizzes', Session.get('questionCursor'));
 });

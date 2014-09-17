@@ -1,23 +1,56 @@
-if (Quizzes.find().count() === 0) {
-    Quizzes.insert({
-        _id : "Music",
-        path: null
+if ( !Categories.find().count() ) {
+
+    Categories.insert({
+        _id: "Qvizo",
+        children: [
+            "Art & Literature",
+            "Food & Drink",
+            "Government"
+        ]
+    })
+
+    Categories.insert({
+        _id: "Government",
+        children: [
+            "Australia"
+        ]
     });
-    Quizzes.insert({
-        _id : "Government",
-        path: null
+
+    Categories.insert({
+        _id: "Australia",
+        children: [
+            "Immigration",
+            "State"
+        ]
     });
-    Quizzes.insert({
-        _id : "Australia",
-        path: [",Government,"]
+
+    Categories.insert({
+        _id: "Immigration",
+        children: [
+            "Citizenship"
+        ]
     });
-    Quizzes.insert({
-        _id : "Immigration",
-        path: [",Government,Australia,"]
+
+    Categories.insert({
+        _id: "State",
+        children: [
+            "Victoria"
+        ]
     });
+
+    Categories.insert({
+        _id: "Victoria",
+        children: [
+            "VicRoads"
+        ]
+    });
+
+}
+
+if ( !Quizzes.find().count() ) {
+
     Quizzes.insert({
         _id      : "Citizenship",
-        path     : [",Government,Australia,Immigration,"],
         questions: [
             {
                 question     : "What do we remember on Anzac Day?",
