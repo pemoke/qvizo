@@ -1,48 +1,63 @@
 if ( !Categories.find().count() ) {
 
+    //Categories.insert({
+    //    _id: "Qvizo",
+    //    ancestors: [ ],
+    //    parent: null
+    //});
+
     Categories.insert({
-        _id: "Qvizo",
-        children: [
-            "Art & Literature",
-            "Food & Drink",
-            "Government"
-        ]
-    })
+        _id: "Art & Literature",
+        ancestors: [ ],
+        parent: null
+    });
+
+    Categories.insert({
+        _id: "Food & Drink",
+        ancestors: [ ],
+        parent: null
+    });
 
     Categories.insert({
         _id: "Government",
-        children: [
-            "Australia"
-        ]
+        ancestors: [ ],
+        parent: null
     });
 
     Categories.insert({
         _id: "Australia",
-        children: [
-            "Immigration",
-            "State"
-        ]
+        ancestors: [ "Government" ],
+        parent: "Government"
     });
 
     Categories.insert({
         _id: "Immigration",
-        children: [
-            "Citizenship"
-        ]
+        ancestors: [ "Government", "Australia" ],
+        parent: "Australia"
+    });
+
+    Categories.insert({
+        _id: "Citizenship",
+        ancestors: [ "Government", "Australia", "Immigration" ],
+        parent: "Immigration"
     });
 
     Categories.insert({
         _id: "State",
-        children: [
-            "Victoria"
-        ]
+        ancestors: [ "Government", "Australia" ],
+        parent: "Australia"
     });
 
     Categories.insert({
         _id: "Victoria",
-        children: [
-            "VicRoads"
-        ]
+        ancestors: [ "Government", "Australia", "State" ],
+        parent: "State"
+    });
+
+    Categories.insert({
+        _id: "VicRoads",
+        ancestors: [ "Government", "Australia", "State", "Victoria" ],
+        parent: "Victoria"
     });
 
 }

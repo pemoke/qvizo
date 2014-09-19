@@ -1,12 +1,14 @@
 Template.quizCategories.helpers({
 
     categoryName: function () {
-        return this.toString();
+        return this._id;
     },
 
     categoryURL: function () {
-        var url = this.toString();
-        return encodeURIComponent(url);
+        console.log(this.ancestors);
+        var url = this.ancestors.join('/');
+        //url = url == '' ? this._id : url;
+        return encodeURIComponent(this._id);
     }
 
 });
@@ -14,7 +16,6 @@ Template.quizCategories.helpers({
 Template.quizCategories.events({
 
     'click a': function (e, t) {
-        console.log(this);
         //TODO change the collection
     }
 
