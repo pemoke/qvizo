@@ -1,7 +1,8 @@
 <template name="quizList">
-    <div class="quizzes">
+    <h3>Quiz list</h3>
+    <ul class="quizzes">
         {{#each quizzes}}
-            {{> quizItem}}
+           <li>{{> quizItem}}</li>
         {{/each}}
-    </div>
+    </ul>
 </template>

@@ -5,10 +5,13 @@ Template.quizCategories.helpers({
     },
 
     categoryURL: function () {
-        console.log(this.ancestors);
-        var url = this.ancestors.join('/');
-        //url = url == '' ? this._id : url;
-        return encodeURIComponent(this._id);
+        // get the path property and construct the path
+        var urlPath = this.path === null ? this._id : this.path + this._id;
+
+        // replace commas in path with forward slashes
+        urlPath = urlPath.replace(/,/g, '/');
+
+        return (urlPath);
     }
 
 });
