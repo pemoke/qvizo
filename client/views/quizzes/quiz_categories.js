@@ -6,10 +6,8 @@ Template.quizCategories.helpers({
 
     categoryURL: function () {
         // get the path property and construct the path
-        var urlPath = this.path === null ? this._id : this.path + this._id;
-
-        // replace commas in path with forward slashes
-        urlPath = urlPath.replace(/,/g, '/');
+        var urlPath = this.path === null ? (',' + this._id + ',') : encodeURIComponent(this.path + this._id + ',');
+        urlPath = '?theCategory=' + encodeURIComponent(urlPath);
 
         return (urlPath);
     }

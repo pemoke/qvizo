@@ -1,5 +1,5 @@
 Template.quizItem.helpers({
-    answer: function() {
-        return this;
+    quizURL: function() {
+        return 'quiz?id=' + this._id;
     }
 });

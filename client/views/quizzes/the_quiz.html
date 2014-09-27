@@ -1,0 +1,13 @@
+<template name="theQuiz">
+    <h3>{{quizName}}</h3>
+
+    <p>{{quizQuestionAndChoices.question}}</p>
+    <ul>
+        {{#each quizQuestionAndChoices.choices}}
+            <li>{{this}}</li>
+        {{/each}}
+    </ul>
+    <button id="prevQuestion">Previous</button>
+    <br>
+    <button id="nextQuestion">Next</button>
+</template>

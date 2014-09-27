@@ -122,4 +122,36 @@ if (!Quizzes.find().count()) {
         ]
     });
 
+    Quizzes.insert({
+        name     : "VicRoads Test",
+        path     : ",Government,Australia,State,Victoria,VicRoads,",
+        questions: [
+            {
+                question     : "xxxxxx",
+                choices      : [
+                    "fdsafdsaf",
+                    "gdfgre",
+                    "dfrgrww"
+                ],
+                correctAnswer: 0
+            },
+        ]
+    });
+
+    Quizzes.insert({
+        name     : "Food & Drink",
+        path     : ",Food & Drink,",
+        questions: [
+            {
+                question     : "food",
+                choices      : [
+                    "fdsafdsaf",
+                    "gdfgre",
+                    "dfrgrww"
+                ],
+                correctAnswer: 0
+            }
+        ]
+    });
+
 }
