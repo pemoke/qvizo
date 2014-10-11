@@ -1,13 +1,21 @@
 <template name="theQuiz">
-    <h3>{{quizName}}</h3>
-
-    <p>{{quizQuestionAndChoices.question}}</p>
-    <ul>
-        {{#each quizQuestionAndChoices.choices}}
-            <li>{{this}}</li>
-        {{/each}}
-    </ul>
-    <button id="prevQuestion">Previous</button>
-    <br>
-    <button id="nextQuestion">Next</button>
+    <article>
+        <header>
+            {{quizName}}
+        </header>
+        <h1>{{quizQuestionAndChoices.question}}</h1>
+        <form>
+            <ul>
+                {{#each quizQuestionAndChoices.choicesWithIndex}}
+                    <li>
+                        <input type="radio" id="{{quizId}}{{questionIndex}}{{choiceIndex}}" name="answer">
+                        <label for="{{quizId}}{{questionIndex}}{{choiceIndex}}">{{value}}</label>
+                    </li>
+                {{/each}}
+            </ul>
+        </form>
+        <button id="prevQuestion">Previous</button>
+        <br>
+        <button id="nextQuestion">Next</button>
+    </article>
 </template>
