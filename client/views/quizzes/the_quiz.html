@@ -8,8 +8,8 @@
             <ul>
                 {{#each quizQuestionAndChoices.choicesWithIndex}}
                     <li>
-                        <input type="radio" id="{{quizId}}{{questionIndex}}{{choiceIndex}}" name="answer">
-                        <label for="{{quizId}}{{questionIndex}}{{choiceIndex}}">{{value}}</label>
+                        <input type="radio" id="{{_id}}" name="answer" {{checked}}>
+                        <label for="{{_id}}">{{value}}</label>
                     </li>
                 {{/each}}
             </ul>
