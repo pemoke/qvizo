@@ -27,12 +27,18 @@ Template.theQuiz.helpers({
 
                 //remap the choices array to store array's index
                 qc.choicesWithIndex = choices.map(function(value, index) {
-                    var questionId = qc.quizId + ':' + qc.questionIndex;
-
                     // check in local miniMongo if the choice has been made before
-                    var wasChecked = Answers.findOne({_id: questionId});
-                    if (wasChecked) {
-                        wasChecked = index == wasChecked.madeChoiceIndex ? 'checked' : '';
+                    var answers = Answers.findOne({_id: qc.quizId});
+
+                    if (answers) {
+                        var wasChecked = '';
+                        //var wasChecked = answers.QA.each(function(element, index, array) {
+                        //    console.log(element);
+                        //});
+                        //TODO
+                        console.log(answers.toString());
+
+                        //wasChecked = index == wasChecked.madeChoiceIndex ? 'checked' : '';
                     }
 
                     // returning generated objects with a unique field called _id which they need
@@ -59,15 +65,26 @@ Template.theQuiz.events({
 
             // create an array of idies from theChoice which represents quizId:questionIndex:choiceIndex
             var idies = theChoice.split(':');
-            var questionId = idies[0] + ':' + idies[1];
-            var choiceIndex = idies[2];
+            var quizId = idies[0];
+            var questionIndex = idies[1];
+            var madeChoiceIndex = idies[2];
 
-            // store the answered choice in a local miniMongoDB
-            Answers._collection.update(
-                {_id: questionId},
-                {_id: questionId, madeChoiceIndex: choiceIndex},
-                {upsert: true}
-            );
+            // see if there is already stored answer
+            if (Answers.findOne({_id: quizId, 'QA.questionIndex': questionIndex})) {
+                Answers._collection.update(
+                    {_id: quizId, 'QA.questionIndex': questionIndex},
+                    {$set: {'QA.$.madeChoiceIndex': madeChoiceIndex}},
+                    {upsert: false}
+                );
+            // else store the answer
+            } else {
+                Answers._collection.update(
+                    {_id: quizId},
+                    {$addToSet: { QA: {questionIndex: questionIndex, madeChoiceIndex: madeChoiceIndex} } },
+                    {upsert: true}
+                );
+            }
+
         } else {
             //alert('make a selection first');
         }
