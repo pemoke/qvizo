@@ -27,18 +27,20 @@ Template.theQuiz.helpers({
 
                 //remap the choices array to store array's index
                 qc.choicesWithIndex = choices.map(function(value, index) {
+
+                    var wasChecked = '';
+
                     // check in local miniMongo if the choice has been made before
-                    var answers = Answers.findOne({_id: qc.quizId});
-
+                    var answers = Answers.findOne({_id: qc.quizId, 'QA.questionIndex': qc.questionIndex});
                     if (answers) {
-                        var wasChecked = '';
-                        //var wasChecked = answers.QA.each(function(element, index, array) {
-                        //    console.log(element);
-                        //});
-                        //TODO
-                        console.log(answers.toString());
-
-                        //wasChecked = index == wasChecked.madeChoiceIndex ? 'checked' : '';
+                        var obj = answers.QA;
+                        for (var prop in obj) {
+                            if(obj.hasOwnProperty(prop)) {
+                                wasChecked =
+                                    obj[prop].questionIndex == qc.questionIndex && obj[prop].madeChoiceIndex == index ?
+                                        'checked' : '';
+                            }
+                        }
                     }
 
                     // returning generated objects with a unique field called _id which they need
@@ -69,7 +71,7 @@ Template.theQuiz.events({
             var questionIndex = idies[1];
             var madeChoiceIndex = idies[2];
 
-            // see if there is already stored answer
+            // see if there is already a stored answer
             if (Answers.findOne({_id: quizId, 'QA.questionIndex': questionIndex})) {
                 Answers._collection.update(
                     {_id: quizId, 'QA.questionIndex': questionIndex},
