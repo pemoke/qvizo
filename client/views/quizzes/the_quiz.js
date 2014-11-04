@@ -4,101 +4,43 @@ Template.theQuiz.helpers({
     },
 
     quizQuestionAndChoices: function () {
-        //Check if the data is ready
-        if (this.questions) {
-            var currentQuestion = Session.get('currentQuestion') === undefined ?
-                Session.set('currentQuestion', 0) : Session.get('currentQuestion');
-
-            // define question and choices object
-            var qc = this.questions[currentQuestion];
-
-            if (qc) {
-                // store the _id of current quiz
-                qc.quizId = this._id;
-
-                // store array index of current question
-                qc.questionIndex = currentQuestion.toString();
-
-                // store the question
-                qc.question = this.questions[currentQuestion].question;
-
-                // get the choices array
-                var choices = this.questions[currentQuestion].choices;
-
-                //remap the choices array to store array's index
-                qc.choicesWithIndex = choices.map(function(value, index) {
-
-                    var wasChecked = '';
-
-                    // check in local miniMongo if the choice has been made before
-                    var answers = Answers.findOne({_id: qc.quizId, 'QA.questionIndex': qc.questionIndex});
-                    if (answers) {
-                        var obj = answers.QA;
-                        for (var prop in obj) {
-                            if(obj.hasOwnProperty(prop)) {
-                                wasChecked =
-                                    obj[prop].questionIndex == qc.questionIndex && obj[prop].madeChoiceIndex == index ?
-                                        'checked' : '';
-                            }
-                        }
-                    }
-
-                    // returning generated objects with a unique field called _id which they need
-                    // http://stackoverflow.com/questions/26358910/unique-id-for-label-input-pairs
-                    var choiceId = qc.quizId + ':' + qc.questionIndex + ':' + index;
-                    return {value: value, _id: choiceId, checked: wasChecked};
-                });
-
-                return qc;
-            }
-        }
+        return this;
     }
 });
 
 Template.theQuiz.events({
-    'click #nextQuestion, click #prevQuestion': function(theEvent, theTemplate) {
-        // get the selected choice
-        var theChoice = document.querySelector('input[name="answer"]:checked');
-
-        // store the choice in local minimongo and move to next question
-        if (theChoice && theChoice.attributes.id.value) {
-            // get the choice id, which consist of quizId:questionIndex:choiceIndex
-            theChoice = theChoice.attributes.id.value;
-
-            // create an array of idies from theChoice which represents quizId:questionIndex:choiceIndex
-            var idies = theChoice.split(':');
-            var quizId = idies[0];
-            var questionIndex = idies[1];
-            var madeChoiceIndex = idies[2];
-
-            // see if there is already a stored answer
-            if (Answers.findOne({_id: quizId, 'QA.questionIndex': questionIndex})) {
-                Answers._collection.update(
-                    {_id: quizId, 'QA.questionIndex': questionIndex},
-                    {$set: {'QA.$.madeChoiceIndex': madeChoiceIndex}},
-                    {upsert: false}
-                );
-            // else store the answer
-            } else {
-                Answers._collection.update(
-                    {_id: quizId},
-                    {$addToSet: { QA: {questionIndex: questionIndex, madeChoiceIndex: madeChoiceIndex} } },
-                    {upsert: true}
-                );
-            }
-
-        } else {
-            //alert('make a selection first');
-        }
+    'click #startQuiz': function(theEvent, theTemplate) {
+        Router.go('theQuizQuestion', {_id: theTemplate.data._id, questionIndex: 0});
     },
 
     'click #nextQuestion': function(theEvent, theTemplate) {
-        var currentQuestion = Session.get('currentQuestion');
-        if (this.questions[++currentQuestion]) Session.set('currentQuestion', currentQuestion);
+        if (theTemplate.data.hasNextQuestion) {
+            Router.go('theQuizQuestion', {_id: theTemplate.data._id, questionIndex: ++theTemplate.data.questionIndex});
+        } else {
+            Router.go('theQuizResult', {_id: theTemplate.data._id});
+        }
     },
 
     'click #prevQuestion': function(theEvent, theTemplate) {
-        var currentQuestion = Session.get('currentQuestion');
-        if (currentQuestion != 0) Session.set('currentQuestion', --currentQuestion);
+        if (theTemplate.data.questionIndex > 0) {
+            Router.go('theQuizQuestion', {_id: theTemplate.data._id, questionIndex: --theTemplate.data.questionIndex});
+        }
+    },
+
+    'click input[type="radio"]': function(theEvent, theTemplate) {
+        // Store the selected choice, which id has format like "635dpDhd2FLQjDxWC-0-1", in localStorage
+        var id = theEvent.currentTarget.id;
+        id = id.split('-');
+
+        var quizId = id[0];
+        var questionKey = id[1];
+        var choiceMade = id[2];
+
+        var answersObj = localStorage.getItem('Answers') == null ? {} : JSON.parse(localStorage.getItem('Answers'));
+        answersObj[quizId] = answersObj[quizId] == undefined ? {} : answersObj[quizId];
+        answersObj[quizId][questionKey] = choiceMade;
+
+        localStorage.setItem('Answers', JSON.stringify(answersObj) );
+
     }
 });

@@ -3,19 +3,23 @@
         <header>
             {{quizName}}
         </header>
-        <h1>{{quizQuestionAndChoices.question}}</h1>
-        <form>
-            <ul>
-                {{#each quizQuestionAndChoices.choicesWithIndex}}
-                    <li>
-                        <input type="radio" id="{{_id}}" name="answer" {{checked}}>
-                        <label for="{{_id}}">{{value}}</label>
-                    </li>
-                {{/each}}
-            </ul>
-        </form>
-        <button id="prevQuestion">Previous</button>
-        <br>
-        <button id="nextQuestion">Next</button>
+        {{#if quizQuestionAndChoices.question}}
+            <h1>{{quizQuestionAndChoices.question}}</h1>
+            <form>
+                <ul>
+                    {{#each quizQuestionAndChoices.choicesWithIndex}}
+                        <li>
+                            <input type="radio" id="{{_id}}" name="answer" {{checked}}>
+                            <label for="{{_id}}">{{value}}</label>
+                        </li>
+                    {{/each}}
+                </ul>
+            </form>
+            <button id="prevQuestion">Previous</button>
+            <br>
+            <button id="nextQuestion">Next</button>
+        {{else}}
+            <button id="startQuiz">Start the Quiz</button>
+        {{/if}}
     </article>
 </template>
