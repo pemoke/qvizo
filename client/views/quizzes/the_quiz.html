@@ -3,14 +3,15 @@
         <header>
             {{quizName}}
         </header>
-        {{#if quizQuestionAndChoices.question}}
-            <h1>{{quizQuestionAndChoices.question}}</h1>
+        {{#if quizQuestion}}
+            <h1>{{quizQuestion.question}}</h1>
             <form>
                 <ul>
-                    {{#each quizQuestionAndChoices.choicesWithIndex}}
+                    {{#each quizChoices}}
                         <li>
-                            <input type="radio" id="{{_id}}" name="answer" {{checked}}>
-                            <label for="{{_id}}">{{value}}</label>
+                            <input type="radio"
+                                   id="{{_id}}" name="answer" {{alreadyChecked}}>
+                            <label for="{{_id}}">{{choice}}</label>
                         </li>
                     {{/each}}
                 </ul>

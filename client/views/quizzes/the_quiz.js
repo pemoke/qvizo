@@ -3,8 +3,29 @@ Template.theQuiz.helpers({
         return this.name;
     },
 
-    quizQuestionAndChoices: function () {
-        return this;
+    quizQuestion: function () {
+        return this.question;
+    },
+
+    quizChoices: function () {
+        return this.question.choices;
+    },
+
+    alreadyChecked: function() {
+        var madeChoice = JSON.parse(localStorage.getItem('Answers')) != null ?
+            JSON.parse(localStorage.getItem('Answers')) : null ;
+
+
+        var id = this._id.split('-');
+        var quizId = id[0];
+        var questionIndex = id[1];
+        var choiceIndex = id[2];
+
+        if (madeChoice && madeChoice[quizId] && madeChoice[quizId][questionIndex] == choiceIndex) {
+            return 'checked';
+        } else {
+            return '';
+        }
     }
 });
 
