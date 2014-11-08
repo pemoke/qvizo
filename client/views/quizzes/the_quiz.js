@@ -54,12 +54,12 @@ Template.theQuiz.events({
         id = id.split('-');
 
         var quizId = id[0];
-        var questionKey = id[1];
+        var questionIndex = id[1];
         var choiceMade = id[2];
 
         var answersObj = localStorage.getItem('Answers') == null ? {} : JSON.parse(localStorage.getItem('Answers'));
         answersObj[quizId] = answersObj[quizId] == undefined ? {} : answersObj[quizId];
-        answersObj[quizId][questionKey] = choiceMade;
+        answersObj[quizId][questionIndex] = choiceMade;
 
         localStorage.setItem('Answers', JSON.stringify(answersObj) );
 
